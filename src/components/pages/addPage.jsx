@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { db } from '../utils/firebase';
-import {collection, addDoc, Timestamp} from 'firebase/firestore';
+import {doc, setDoc, Timestamp} from 'firebase/firestore';
 import '../styles/addPage.css';
 
 export default class addPage extends Component {
@@ -23,8 +23,8 @@ export default class addPage extends Component {
         event.preventDefault()
 
         try {
-            await addDoc(
-                collection(db,'blogs'),
+            await setDoc(
+                doc(db,'blogs',`${this.state.author}`),
                 {
                     title: this.state.title,
                     author: this.state.author,

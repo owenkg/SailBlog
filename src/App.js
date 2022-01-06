@@ -5,15 +5,17 @@ import Landing from './components/pages/landing';
 import BlogsPage from './components/pages/blogsPage';
 import AddPage from './components/pages/addPage';
 import ViewPage from './components/pages/viewPage';
+import DeletePage from './components/pages/deletePage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Landing/>}/>
-        <Route path="/blog" element={<BlogsPage/>}/>
-        <Route path="/add" element={<AddPage/>}/>
-        <Route path="/view" element={<ViewPage/>}/>
+        <Route path="/" element={<Landing />} />
+        <Route path="/blog" element={<BlogsPage />} />
+        <Route path="/add" element={<AddPage />} />
+        <Route path="/view" element={<ViewPage />} />
+        <Route path="/delete" element={<DeletePage />} />
       </Routes>
     </Router>
   );
