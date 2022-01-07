@@ -10,7 +10,7 @@ export default class deletePage extends Component {
 
         this.state = {
             title: this.title,
-            author: this.author
+            id: this.id
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.checkExists = this.checkExists.bind(this);
@@ -20,23 +20,25 @@ export default class deletePage extends Component {
     checkExists = async (event) => {
         event.preventDefault();
 
-        await getDoc(
-            doc(db, "blogs", `${this.state.author}`),
-            where("article", "==", `${this.state.title}`)
+        const requestQuery = query(
+            collection(db, "blogs"), where("title", "==", `${this.state.title}`)
         )
-            .then(
-                (response) => {
-                    console.log(response._document)
-                    if (response._document == null) {
-                        alert("no Record Found!")
-                    } else {
-                        this.handleSubmit(event)
-                    }
-                }
-            )
-            .catch((exception) => {
-                console.log(exception)
+        const querySnapshot = await getDocs(requestQuery)
+        if (querySnapshot.size < 1) {
+            //console.log("No Record Found");
+            alert("No Record Found");
+        } else {
+            querySnapshot.forEach((doc) => {
+                //console.log(doc.id, '=>', doc.data());
+                let data = doc.data();
+                this.setState({
+                
+                    id: doc.id,
+                    
+                })
+                this.handleSubmit(event)
             })
+        }
     }
 
     handleSubmit = async (event) => {
@@ -44,18 +46,18 @@ export default class deletePage extends Component {
         event.preventDefault();
 
         await updateDoc(
-            doc(db, 'blogs', `${this.state.author}`),
+            doc(db, 'blogs', `${this.state.id}`),
             {
                 active: false
             }
         )
             .then((response) => {
                 alert("Article Successfully Deleted!")
-                console.log(response)
+                //console.log(response)
             })
             .catch((exception) => {
                 alert(exception)
-                console.log(exception)
+                //console.log(exception)
             })
     }
 
@@ -79,9 +81,9 @@ export default class deletePage extends Component {
                     <label htmlFor="title">Title</label>
                     <input type="text" name="title" placeholder="Title" value={this.state.title} onChange={this.handleTitleChange} />
                     <br />
-                    <label htmlFor="author">Author</label>
+                    {/* <label htmlFor="author">Author</label>
                     <input type="text" name="author" placeholder="Author" value={this.state.author} onChange={this.handleAuthorChange} />
-                    <br />
+                    <br /> */}
                     <button type="submit">Submit</button>
                 </form>
             </div>

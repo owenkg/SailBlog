@@ -6,6 +6,7 @@ import BlogsPage from './components/pages/blogsPage';
 import AddPage from './components/pages/addPage';
 import ViewPage from './components/pages/viewPage';
 import DeletePage from './components/pages/deletePage';
+import UpdatePage from './components/pages/updatePage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/add" element={<AddPage />} />
         <Route path="/view" element={<ViewPage />} />
         <Route path="/delete" element={<DeletePage />} />
+        <Route path="/update" element={<UpdatePage />} />
       </Routes>
     </Router>
   );

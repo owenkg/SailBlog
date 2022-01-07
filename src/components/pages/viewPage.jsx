@@ -45,16 +45,18 @@ export default class viewPage extends Component {
             // this.setState({
             //     articles: querySnapshot.docs
             // })
-            //console.log(querySnapshot)
+            ////console.log(querySnapshot)
             querySnapshot.forEach((element) => {
+                
                 let articleData = element.data();
+                //console.log(articleData)
                 this.setState({
                     articles: [...this.state.articles, articleData]
                 })
                 this.setState({
-                    valid_articles: [...this.state.valid_articles, this.state.articles.filter(article => article.active === true)]
+                    valid_articles:  this.state.articles.filter(article => article.active === true)
                 })
-                console.log(this.state.valid_articles)
+                //console.log(this.state.valid_articles)
             })
 
         })
@@ -65,7 +67,7 @@ export default class viewPage extends Component {
                 <h2>All Articles</h2>
                 {this.state.valid_articles.length > 0 ?
 
-                    this.state.articles.map((valid_article) => {
+                    this.state.valid_articles.map((valid_article) => {
                         return (<Article title={valid_article.title} article={valid_article.article} author={valid_article.author} />)
                     })
                     :
